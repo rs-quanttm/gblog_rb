@@ -1,0 +1,2 @@
+class PosttaggingPolicy < ApplicationPolicy
+end

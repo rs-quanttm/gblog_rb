@@ -1,0 +1,943 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/users_passwords":
+    post:
+      summary: change password
+      tags:
+      - Change password
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '200':
+          description: Cannot update password
+          content:
+            application/json:
+              example:
+                success: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                new_password:
+                  type: string
+                  example: B5LCHbY7N6C9+egEfg==
+                old_password:
+                  type: string
+                  example: B5LCHbY7N6C9+egEfg==
+  "/api/users_reset_password_requests":
+    post:
+      summary: Reset password request
+      tags:
+      - Reset password request
+      parameters: []
+      responses:
+        '204':
+          description: request sent
+          content:
+            application/json:
+              example: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: user@jitera.com
+  "/api/users_verify_reset_password_requests":
+    post:
+      summary: Verify reset password request
+      tags:
+      - Verify reset password request
+      parameters: []
+      responses:
+        '200':
+          description: request sent
+          content:
+            application/json:
+              example:
+                success: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reset_token:
+                  type: string
+                  example: dummy_reset_token
+                password:
+                  type: string
+                  example: rSrjO5GVNM5eDiqzEg==
+                password_confirmation:
+                  type: string
+                  example: XjnFKSt8LyAwctqsTQ==
+  "/api/comments/{id}":
+    put:
+      summary: Update comments
+      tags:
+      - comments
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: update
+          content:
+            application/json:
+              example:
+                comment:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                    roles: enum_type
+                  user_id: foreign_key
+                  post:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  post_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comments:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                      example: string
+                    user_id:
+                      type: foreign_key
+                      example: foreign_key
+                    post_id:
+                      type: foreign_key
+                      example: foreign_key
+    get:
+      summary: Show comments
+      tags:
+      - comments
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: show
+          content:
+            application/json:
+              example:
+                comment:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                    roles: enum_type
+                  user_id: foreign_key
+                  post:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  post_id: foreign_key
+                message: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  "//api/comments":
+    post:
+      summary: Create comments
+      tags:
+      - comments
+      parameters: []
+      responses:
+        '200':
+          description: create
+          content:
+            application/json:
+              example:
+                comment:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                    roles: enum_type
+                  user_id: foreign_key
+                  post:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  post_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comments:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                      example: string
+                    user_id:
+                      type: foreign_key
+                      example: foreign_key
+                    post_id:
+                      type: foreign_key
+                      example: foreign_key
+  "/api/comments":
+    get:
+      summary: List comments
+      tags:
+      - comments
+      parameters:
+      - name: params
+        in: query
+        schema:
+          type: object
+          properties:
+            pagination_page:
+              type: pagination_page
+              example: pagination_page
+            pagination_limit:
+              type: pagination_limit
+              example: pagination_limit
+            comments:
+              type: object
+              properties:
+                content:
+                  type: string
+                  example: string
+                user_id:
+                  type: foreign_key
+                  example: foreign_key
+                post_id:
+                  type: foreign_key
+                  example: foreign_key
+      responses:
+        '200':
+          description: index
+          content:
+            application/json:
+              example:
+                total_pages: integer
+                comments:
+                - id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                    roles: enum_type
+                  user_id: foreign_key
+                  post:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  post_id: foreign_key
+                message: {}
+  "/oauth/revoke":
+    post:
+      summary: Token revoke API generated by module &#39;Email login&#39;
+      tags:
+      - token_revoke
+      parameters: []
+      responses:
+        '403':
+          description: token_revoke
+          content:
+            application/json:
+              example: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  example: string
+  "/oauth/token":
+    post:
+      summary: Token creation API generated by module &#39;Email login&#39;
+      tags:
+      - token_creation
+      parameters: []
+      responses:
+        '401':
+          description: token_creation
+          content:
+            application/json:
+              example:
+                error: string
+                error_description: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  example: string
+                client_id:
+                  type: string
+                  example: string
+                client_secret:
+                  type: string
+                  example: string
+                scope:
+                  type: string
+                  example: string
+                email:
+                  type: string
+                  example: string
+                password:
+                  type: string
+                  example: string
+  "/api/posts/{id}":
+    delete:
+      summary: Destroy posts
+      tags:
+      - posts
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: delete
+          content:
+            application/json:
+              example:
+                message: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+    put:
+      summary: Update posts
+      tags:
+      - posts
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: update
+          content:
+            application/json:
+              example:
+                post:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                  user_id: foreign_key
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  posttaggings:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    post_id: foreign_key
+                  status: enum_type
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                posts:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: string
+                    content:
+                      type: string
+                      example: string
+                    user_id:
+                      type: foreign_key
+                      example: foreign_key
+                    status:
+                      type: enum_type
+                      example: enum_type
+    get:
+      summary: Show posts
+      tags:
+      - posts
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: show
+          content:
+            application/json:
+              example:
+                post:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                  user_id: foreign_key
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  posttaggings:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    post_id: foreign_key
+                  status: enum_type
+                message: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  "//api/posts":
+    post:
+      summary: Create posts
+      tags:
+      - posts
+      parameters: []
+      responses:
+        '200':
+          description: create
+          content:
+            application/json:
+              example:
+                post:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                  user_id: foreign_key
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  posttaggings:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    post_id: foreign_key
+                  status: enum_type
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                posts:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: string
+                    content:
+                      type: string
+                      example: string
+                    user_id:
+                      type: foreign_key
+                      example: foreign_key
+                    status:
+                      type: enum_type
+                      example: enum_type
+  "/api/posts":
+    get:
+      summary: List posts
+      tags:
+      - posts
+      parameters:
+      - name: params
+        in: query
+        schema:
+          type: object
+          properties:
+            pagination_page:
+              type: pagination_page
+              example: pagination_page
+            pagination_limit:
+              type: pagination_limit
+              example: pagination_limit
+            posts:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: string
+                content:
+                  type: string
+                  example: string
+                user_id:
+                  type: foreign_key
+                  example: foreign_key
+                status:
+                  type: enum_type
+                  example: enum_type
+      responses:
+        '200':
+          description: index
+          content:
+            application/json:
+              example:
+                total_pages: integer
+                posts:
+                - id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  content: string
+                  user:
+                    id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    email: string
+                  user_id: foreign_key
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                    post_id: foreign_key
+                  posttaggings:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    post_id: foreign_key
+                  status: enum_type
+                message: {}
+  "/api/users_registrations":
+    post:
+      summary: Create users
+      tags:
+      - authentication
+      parameters: []
+      responses:
+        '200':
+          description: auth_registration
+          content:
+            application/json:
+              example:
+                id: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    password:
+                      type: string
+                      example: string
+                    password_confirmation:
+                      type: string
+                      example: string
+                    email:
+                      type: string
+                      example: string
+  "/api/users/{id}":
+    delete:
+      summary: Destroy users
+      tags:
+      - users
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: delete
+          content:
+            application/json:
+              example:
+                message: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: string
+    put:
+      summary: Update users
+      tags:
+      - users
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: update
+          content:
+            application/json:
+              example:
+                user:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  email: string
+                  posts:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  roles: enum_type
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: string
+                    roles:
+                      type: enum_type
+                      example: enum_type
+    get:
+      summary: Show users
+      tags:
+      - users
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: show
+          content:
+            application/json:
+              example:
+                user:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  email: string
+                  posts:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  roles: enum_type
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                message: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: string
+  "//api/users":
+    post:
+      summary: Create users
+      tags:
+      - users
+      parameters: []
+      responses:
+        '200':
+          description: create
+          content:
+            application/json:
+              example:
+                user:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  email: string
+                  posts:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  roles: enum_type
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      example: string
+                    roles:
+                      type: enum_type
+                      example: enum_type
+  "/api/users":
+    get:
+      summary: List users
+      tags:
+      - users
+      parameters:
+      - name: params
+        in: query
+        schema:
+          type: object
+          properties:
+            pagination_page:
+              type: pagination_page
+              example: pagination_page
+            pagination_limit:
+              type: pagination_limit
+              example: pagination_limit
+            users:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: string
+                roles:
+                  type: enum_type
+                  example: enum_type
+      responses:
+        '200':
+          description: index
+          content:
+            application/json:
+              example:
+                total_pages: integer
+                users:
+                - id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  email: string
+                  posts:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    content: string
+                    user_id: foreign_key
+                  roles: enum_type
+                  comments:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    content: string
+                    user_id: foreign_key
+                  likes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    user_id: foreign_key
+                message: {}
+  "/health":
+    get:
+      summary: System Health
+      tags:
+      - system
+      responses:
+        '200':
+          description: index
+          content:
+            application/json:
+              example: {}
+servers:
+- url: "{defaultHost}"
+  variables:
+    defaultHost:
+      default: ''
+components:
+  securitySchemes:
+    bearerAuth:
+      name: Authorization
+      type: http
+      description: JWT Authorization header using the Bearer scheme.
+      scheme: bearer
+      bearerFormat: JWT
