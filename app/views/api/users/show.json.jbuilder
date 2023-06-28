@@ -19,7 +19,7 @@ else
       json.user_id post.user_id
     end
 
-    json.roles @user.role
+    # json.roles @user.role
 
     json.comments @user.comments do |comment|
       json.id comment.id

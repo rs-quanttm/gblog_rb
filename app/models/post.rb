@@ -35,5 +35,8 @@ class Post < ApplicationRecord
   # jitera-anchor-dont-touch: reset_password
 
   class << self
+    def search_by_title(title)
+      where("title LIKE ?", "%#{title}%")
+    end
   end
 end
