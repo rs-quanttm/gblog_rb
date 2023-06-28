@@ -1,7 +1,7 @@
 module Api
   class UsersController < Api::BaseController
-    before_action :admin_user, only: [:update]
-    before_action :user_signed_in?, only: [:show]
+    # before_action :admin_user, only: [:update]
+    # before_action :user_signed_in?, only: [:show]
     # jitera-anchor-dont-touch: before_action_filter
 
     # jitera-index-anchor-dont-touch: actions
