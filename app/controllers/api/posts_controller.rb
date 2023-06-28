@@ -9,10 +9,11 @@ module Api
     # end
 
     # jitera-show-anchor-dont-touch: actions
-    # def show
-    #   @post = Post.find(params[:id])
-    #   # show-authorization-code
-    # end
+    def show
+      post = params[:title]
+      @post = Post.search_by_title(post)
+      # show-authorization-code
+    end
 
     # jitera-create-anchor-dont-touch: actions
     def create
