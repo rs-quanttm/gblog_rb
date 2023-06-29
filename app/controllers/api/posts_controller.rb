@@ -3,10 +3,10 @@ module Api
     # jitera-anchor-dont-touch: before_action_filter
 
     # jitera-index-anchor-dont-touch: actions
-    # def index
-    #   @posts = PostsService::Index.new(params.to_unsafe_h, current_user).execute
-    #   @total_pages = @posts.total_pages
-    # end
+    def index
+      @posts = PostsService::Index.new(params.to_unsafe_h, current_user).execute
+      @total_pages = @posts.total_pages
+    end
 
     # jitera-show-anchor-dont-touch: actions
     def show
