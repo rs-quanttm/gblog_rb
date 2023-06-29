@@ -10,9 +10,12 @@ module Api
 
     # jitera-show-anchor-dont-touch: actions
     def show
-      post = params[:title]
-      @post = Post.search_by_title(post)
+      @post = Post.find(params[:id])
+      raise ActiveRecord::RecordNotFound if @post.blank? || @post.status != "approve"
       # show-authorization-code
+
+      @error_object = @post.errors.full_messages
+      render status: :unprocessable_entity
     end
 
     # jitera-create-anchor-dont-touch: actions
