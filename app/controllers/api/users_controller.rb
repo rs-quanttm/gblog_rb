@@ -13,7 +13,11 @@ module Api
     # jitera-show-anchor-dont-touch: actions
     def show
       @user = User.find(params[:id])
+      raise ActiveRecord::RecordNotFound if @user.blank?
       # show-authorization-code
+      
+      @error_object = @user.errors.full_messages
+      render status: :unprocessable_entity
     end
 
     # jitera-create-anchor-dont-touch: actions
@@ -56,7 +60,7 @@ module Api
     end
 
     def admin_user
-      return if current_user.role == :admin
+      return if current_user.roles == "Admin"
     end
 
   end
