@@ -3,16 +3,20 @@ module Api
     # jitera-anchor-dont-touch: before_action_filter
 
     # jitera-index-anchor-dont-touch: actions
-    # def index
-    #   @posts = PostsService::Index.new(params.to_unsafe_h, current_user).execute
-    #   @total_pages = @posts.total_pages
-    # end
+    def index
+      @posts = PostsService::Index.new(params.to_unsafe_h, current_user).execute
+      @total_pages = @posts.total_pages
+    end
 
     # jitera-show-anchor-dont-touch: actions
-    # def show
-    #   @post = Post.find(params[:id])
-    #   # show-authorization-code
-    # end
+    def show
+      @post = Post.find(params[:id])
+      raise ActiveRecord::RecordNotFound if @post.blank? || @post.status != "approve"
+      # show-authorization-code
+
+      @error_object = @post.errors.full_messages
+      render status: :unprocessable_entity
+    end
 
     # jitera-create-anchor-dont-touch: actions
     def create
